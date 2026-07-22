@@ -216,6 +216,7 @@ export class EbookReaderComponent implements OnInit {
     ]).pipe(
       switchMap(([, book]) => {
         this.book.set(book);
+        this.pageTitle.setBookPageTitle(book);
         const bookType = (this.altBookType as BookType | undefined) ?? book.primaryFile?.bookType;
         if (!bookType) {
           return throwError(() => new Error('Book type not found'));
@@ -243,7 +244,6 @@ export class EbookReaderComponent implements OnInit {
         ]);
       }),
       switchMap(([, , {book, bookType, bookFileId}]) => {
-        this.pageTitle.setBookPageTitle(book);
         this.progressService.initialize(this.bookId, bookType, bookFileId);
         this.selectionService.initialize(this.bookId);
         this.headerService.initialize(this.bookId, book.metadata?.title || '');
