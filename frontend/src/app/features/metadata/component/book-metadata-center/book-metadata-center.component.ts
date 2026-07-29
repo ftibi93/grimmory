@@ -131,7 +131,9 @@ export class BookMetadataCenterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.pageTitle.setPageTitle(this.t.translate('metadata.center.title'));
+    if (!this.config) {
+      this.pageTitle.setPageTitle(this.t.translate('metadata.center.title'));
+    }
     const bookIdFromDialog: number | undefined = this.config?.data?.bookId;
     if (bookIdFromDialog != null) {
       this.currentBookId.set(bookIdFromDialog);
